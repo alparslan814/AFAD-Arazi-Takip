@@ -18,15 +18,18 @@ jobs:
     - name: Java kurulumu
       uses: actions/setup-java@v4
       with:
-        distribution: 'zulu'
+        distribution: 'temurin'
         java-version: '17'
 
-    - name: Gradle ile APK oluştur
-      run: |
-        chmod +x gradlew
-        ./gradlew assembleDebug
+    - name: Gradle Kur ve APK Oluştur
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.5'
 
-    - name: APK'yı yükle
+    - name: APK Derle
+      run: gradle assembleDebug
+
+    - name: APK'yı yukle
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
