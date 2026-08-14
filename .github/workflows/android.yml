@@ -23,10 +23,9 @@ jobs:
 
     - name: APK Derle
       run: |
-        # settings.gradle dosyasının bulunduğu yeri bulalım
-        PROJECT_DIR=$(find . -name "settings.gradle" -exec dirname {} \;)
-        echo "Proje dizini bulundu: $PROJECT_DIR"
-        cd "$PROJECT_DIR"
+        # settings.gradle dosyasının bulunduğu tam dizini bul ve oraya geç
+        TARGET_DIR=$(find . -maxdepth 3 -name "settings.gradle" -exec dirname {} \; | head -n 1)
+        cd "$TARGET_DIR"
 
         if [ ! -f gradlew ]; then
           gradle wrapper
